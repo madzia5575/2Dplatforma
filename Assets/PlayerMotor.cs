@@ -20,7 +20,7 @@ public class PlayerMotor : MonoBehaviour
     private void FixedUpdate()
     {
         //transform.position += new Vector3(direction.x, direction.y, 0) * Time.deltaTime * speed;
-        HandlePlayerMovement();
+        HandlePlayerXMovement();
         MaxSpeedLimiting();
     }
 
@@ -36,7 +36,7 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-    private void HandlePlayerMovement()
+    private void HandlePlayerXMovement()
     {
         if (direction.x != 0)
         {
