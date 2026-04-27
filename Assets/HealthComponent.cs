@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthComponent : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class HealthComponent : MonoBehaviour
 
     public delegate void OnHealthInitializedHandler(float Health);
     public event OnHealthInitializedHandler OnHealthInitialized;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -62,6 +62,7 @@ public class HealthComponent : MonoBehaviour
         if (Health <= 0)
         {
             Destroy(this.gameObject);
+            SceneManager.LoadScene("EndScene");
         }
 
     }
@@ -86,4 +87,5 @@ public class HealthComponent : MonoBehaviour
         
     }
 
+    
 }
