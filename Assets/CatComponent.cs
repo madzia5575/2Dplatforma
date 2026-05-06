@@ -1,0 +1,32 @@
+using System.Collections;
+using UnityEngine;
+
+public class CatComponent : MonoBehaviour
+{
+    private float Cats = 0;
+
+    public delegate void OnCatsChangedHandler(float newCats, float amountChange);
+    public event OnCatsChangedHandler OnCatsChanged;
+
+    public delegate void OnCatsInitializedHandler(float Cats);
+    public event OnCatsInitializedHandler OnCatsInitialized;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        Cats = 0;
+        OnCatsInitialized?.Invoke(Cats);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void AddCats(float catValue)
+    {
+        Cats += catValue;
+        //Debug.Log(Coins);
+        OnCatsChanged?.Invoke(Cats, catValue);
+    }
+}
