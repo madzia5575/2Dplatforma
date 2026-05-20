@@ -13,16 +13,34 @@ public class PlayerMotor : MonoBehaviour
     public float maxSpeed = 5;
     public float stoppingForce = 10;
     public float dashForce = 5;
+    private Animator animator;
+    private float initScale;
+
+    private float jumpLimit = 2;
+    //public int maxJump = 2;
+    //private int currentJumps;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        initScale = transform.localScale.x;
     }
 
     // Update is called once per frame (not anymore :)))
     private void FixedUpdate()
     {
         //transform.position += new Vector3(direction.x, direction.y, 0) * Time.deltaTime * speed;
+        //check if moving right
+        if(direction.x > 0)
+        {
+            transform.localScale = new Vector3(initScale, transform.localScale.y, transform.localScale.z);
+        }
+        else if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(-initScale, transform.localScale.y, transform.localScale.z);
+        }
         HandlePlayerXMovement();
         MaxSpeedLimiting();
     }
@@ -49,10 +67,17 @@ public class PlayerMotor : MonoBehaviour
         if (direction.x != 0)
         {
             Rigidbody2D.AddForce(new Vector2(direction.x * speed, 0));
+            animator.SetBool("IsMoving", true);
         }
         else if (direction.x != 0)
         {
             Rigidbody2D.AddForce(new Vector2(-Rigidbody2D.linearVelocityX * stoppingForce, 0));
+            //animator.SetBool("IsMoving", false); czemu to nie dziala?? nwm
+        }
+
+        if (direction.x == 0)
+        {
+           animator.SetBool("IsMoving", false);
         }
     }
 
@@ -66,8 +91,19 @@ public class PlayerMotor : MonoBehaviour
         if (canJump)
         {
             Rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            canJump = false;
+            //currentJumps++;
+            jumpLimit--;
+            
+            if (jumpLimit >= 1)
+            {
+                canJump = true;
+            }
+            else
+            {
+                canJump = false;
+            }
         }
+
     }
 
     private void OnDash()
@@ -87,6 +123,7 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
+
     IEnumerator ResetDash (float cooldown)
     {
         yield return new WaitForSeconds(cooldown);
@@ -96,5 +133,6 @@ public class PlayerMotor : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
+        jumpLimit = 2;
     }
 }
