@@ -33,6 +33,7 @@ public class PlayerMotor : MonoBehaviour
     {
         //transform.position += new Vector3(direction.x, direction.y, 0) * Time.deltaTime * speed;
         //check if moving right
+        animator.SetFloat("SpeedY", Rigidbody2D.linearVelocityY);
         if(direction.x > 0)
         {
             transform.localScale = new Vector3(initScale, transform.localScale.y, transform.localScale.z);
@@ -91,12 +92,15 @@ public class PlayerMotor : MonoBehaviour
         if (canJump)
         {
             Rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            //animator.SetBool("IsJumping", true);
             //currentJumps++;
             jumpLimit--;
             
             if (jumpLimit >= 1)
             {
+                //animator.SetBool("IsJumping",false);
                 canJump = true;
+                //animator.SetBool("DoubleJump", true);
             }
             else
             {
@@ -134,5 +138,7 @@ public class PlayerMotor : MonoBehaviour
     {
         canJump = true;
         jumpLimit = 2;
+        //animator.SetBool("IsJumping", false);
+        //animator.SetBool("DoubleJump", false);
     }
 }
