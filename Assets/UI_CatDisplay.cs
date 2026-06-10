@@ -13,18 +13,23 @@ public class UI_CatDisplay : MonoBehaviour
         catComponent.OnCatsChanged += OnCatsChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        textComponent.text = "Cats: " + GameManager.Instance.Cats;
+    }
+
+    private void OnDestroy()
+    {
+        catComponent.OnCatsInitialized -= OnCatsInitialized;
+        catComponent.OnCatsChanged -= OnCatsChanged;
     }
     private void OnCatsInitialized(float Cats)
     {
-        textComponent.text = "Cats: " + Cats.ToString();
+        textComponent.text = "Cats: " + Cats;
     }
 
     private void OnCatsChanged(float newCats, float amountChange)
     {
-        textComponent.text = "Cats: " + newCats.ToString();
+        textComponent.text = "Cats: " + newCats;
     }
 }
