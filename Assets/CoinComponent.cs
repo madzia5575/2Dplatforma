@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CoinComponent : MonoBehaviour
 {
-
+    private float Coins = 0;
     public delegate void OnCoinsChangedHandler(float newCoins, float amountChange);
     public event OnCoinsChangedHandler OnCoinsChanged;
 
@@ -17,7 +17,9 @@ public class CoinComponent : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        OnCoinsInitialized?.Invoke(GameManager.Instance.Coins);
+        Coins = 0;
+        OnCoinsInitialized?.Invoke(Coins);
+        //OnCoinsInitialized?.Invoke(GameManager.Instance.Coins);
     }
 
     // Update is called once per frame
@@ -28,12 +30,12 @@ public class CoinComponent : MonoBehaviour
 
     public void AddCoins(float coinValue)
     {
-        //Coins += coinValue;
+        Coins += coinValue;
         //Debug.Log(Coins);
-        //OnCoinsChanged?.Invoke(Coins, coinValue);
-        GameManager.Instance.Coins += (int)coinValue;
+        OnCoinsChanged?.Invoke(Coins, coinValue);
+        //GameManager.Instance.Coins += (int)coinValue;
 
-        OnCoinsChanged?.Invoke(GameManager.Instance.Coins,coinValue);
+        //OnCoinsChanged?.Invoke(GameManager.Instance.Coins,coinValue);
     }
 
 

@@ -15,21 +15,16 @@ public class UI_CatDisplay : MonoBehaviour
 
     private void Start()
     {
-        textComponent.text = "Cats: " + GameManager.Instance.Cats;
+        //textComponent.text = "Cats: " + GameManager.Instance.Cats;
     }
 
-    private void OnDestroy()
-    {
-        catComponent.OnCatsInitialized -= OnCatsInitialized;
-        catComponent.OnCatsChanged -= OnCatsChanged;
-    }
     private void OnCatsInitialized(float Cats)
     {
-        textComponent.text = "Cats: " + Cats;
+        textComponent.text = "Cats: " + Cats.ToString();
     }
 
     private void OnCatsChanged(float newCats, float amountChange)
     {
-        textComponent.text = "Cats: " + newCats;
+        textComponent.text = "Cats: " + newCats.ToString();
     }
 }
